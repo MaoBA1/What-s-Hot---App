@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, Platform, TouchableOpacity, FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import Styles from '../../utilities/style';
 import Colors from '../../utilities/color';
@@ -57,9 +57,11 @@ const DasheBoardScreen = props => {
                             keyExtractor={item => item._id}
                             renderItem={
                                 post => 
-                                <Post 
-                                    post={post.item}
-                                />
+                                <TouchableOpacity onPress={() => props.navigation.navigate('Discussion', {post: post.item, user: formatted_userName})}>
+                                    <Post 
+                                        post={post.item}
+                                    />
+                                </TouchableOpacity>
                             }
                         />
                     )

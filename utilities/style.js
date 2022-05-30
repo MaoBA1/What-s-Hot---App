@@ -76,6 +76,12 @@ export default StyleSheet.create({
         flexDirection:'row',
         marginBottom:30
     },
+    postUpBar:{
+        width:'100%',        
+        height:120,
+        backgroundColor:Colors.orange1,
+        flexDirection:'row',        
+    },
     arrowBackContainer:{
         height:120,
         width:'20%',
