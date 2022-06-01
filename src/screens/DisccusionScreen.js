@@ -7,6 +7,7 @@ import Styles from '../../utilities/style';
 import Colors from '../../utilities/color';
 
 
+
 const DisccusionScreen = props => {
     const postAuthor = props.route.params.post.author;
     const formatted_postAuthor = postAuthor[0].toUpperCase() + postAuthor.substring(1,postAuthor.length)
@@ -16,7 +17,7 @@ const DisccusionScreen = props => {
     const countOfComments = props.route.params.post.comments.length;
     const countOfLikes = props.route.params.post.likes.length;
     const postImage = props.route.params.post.postImage;
-    const formatted_postTitle = postTitle.length > 15? postTitle.substring(0,15) + '....' : postTitle;
+    const formatted_postTitle = postTitle.length > 15? postTitle.substring(0,20) + '....' : postTitle;
     const formatted_postDate = new Date(postDate).toDateString();
     const postContent = props.route.params.post.content;
     const noImageFound = 'http://www.agarra.org/wp-content/plugins/lightbox/images/No-image-found.jpg';
@@ -76,7 +77,7 @@ const DisccusionScreen = props => {
             <ScrollView style={{width:'100%', padding:20}}>
                 <Text style={{fontFamily:'Baloo2-SemiBold', fontSize:18, color:Colors.white,}}>{postContent}</Text>
                 <View style={{width:'100%', alignItems:'center', flexDirection:'row', marginVertical:40}}>
-                    <TouchableOpacity onPress={() => props.navigation.navigate('Comment', {postId: props.route.params.post._id, user:userName})} style={{marginLeft:40, margin:5, padding:10, borderWidth:2, borderRadius:30, backgroundColor: Colors.white, borderColor:Colors.grey1, flexDirection:'row'}}>
+                    <TouchableOpacity onPress={() => props.navigation.navigate('Comment', {postId: props.route.params.post._id, user:userName, post:props.route.params.post})} style={{marginLeft:40, margin:5, padding:10, borderWidth:2, borderRadius:30, backgroundColor: Colors.white, borderColor:Colors.grey1, flexDirection:'row'}}>
                             <FontAwesome
                                 name="comment"
                                 color={Colors.grey1}

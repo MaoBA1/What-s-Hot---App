@@ -6,6 +6,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Styles from '../../utilities/style';
 import Colors from '../../utilities/color';
 import Post from '../components/Post';
+import {getAllDisccusionsAction} from '../../store/actions';
 
 
 const DasheBoardScreen = props => {
@@ -13,7 +14,7 @@ const DasheBoardScreen = props => {
     let posts = postSelector? postSelector.AllDisccusionsReducer.Disccusions : null;
     const userName = props.route.params.userName;
     const formatted_userName = userName[0].toUpperCase() + userName.substring(1,userName.length);
-    console.log(postSelector);
+    
     const blessing = () => {
         const currentTime = new Date().getHours();
         if(currentTime >= 5 && currentTime<12) {
@@ -26,8 +27,9 @@ const DasheBoardScreen = props => {
             return "Good Night";
         }
     }
-    console.log(posts);
+    
     const blessingText = blessing().split(' ');
+
     return(
         <View style={Styles.dashBoardContainer}>
             <View style={Styles.dashboardUpBar}>

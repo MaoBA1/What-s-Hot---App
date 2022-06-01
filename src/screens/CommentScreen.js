@@ -5,6 +5,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Styles from '../../utilities/style';
 import Colors from '../../utilities/color';
+import Comment from '../components/Comment';
 
 
 
@@ -12,6 +13,17 @@ const CommentScreen = props => {
     const postId = props.route.params.postId;
     const userName = props.route.params.user;
     const [commentText, setCommentText] = useState('');
+    const [commentsArray, setCommentArray] = useState([]);
+    const postAuthor = props.route.params.post.author;
+    const formatted_postAuthor = postAuthor[0].toUpperCase() + postAuthor.substring(1,postAuthor.length)
+    const postDate = props.route.params.post.Date;
+    const postAuthorAvatar = props.route.params.post.authorAvatar;
+    const postTitle = props.route.params.post.title;
+    const countOfComments = props.route.params.post.comments.length;
+    const countOfLikes = props.route.params.post.likes.length;
+    const formatted_postDate = new Date(postDate).toDateString();
+    
+    
     let comments = [];
     const URL = 'https://whatshotapp.herokuapp.com/api/dis/';
     const getPostById = async() => {
@@ -24,8 +36,7 @@ const CommentScreen = props => {
 
         const data = await response.json();
         if(data.status) {
-            comments.push(...data.Disccusion.comments);
-            console.log(comments);
+            setCommentArray(data.Disccusion.comments);            
         }
     }
 
@@ -41,10 +52,11 @@ const CommentScreen = props => {
 
     }
 
-    useEffect(() => {getPostById(); console.log(comments);})
+    getPostById();
 
     return(
-        <KeyboardAvoidingView behavior="height" keyboardVerticalOffset={40} style={Styles.dashBoardContainer}>
+        <KeyboardAvoidingView behavior="height" style={Styles.dashBoardContainer}>
+            <View style={{height:'88%'}}>
             <View style={Styles.postUpBar}>
                 <TouchableOpacity onPress={() => props.navigation.goBack(null)} style={Styles.arrowBackContainer}>
                     <MaterialIcons
@@ -52,10 +64,31 @@ const CommentScreen = props => {
                         size={30}
                     />
                 </TouchableOpacity>
+                <View style={Styles.commentsUpTextContainer}>
+                     <Text style={Styles.dashBoardUpText}>Comments</Text>                     
+                </View>
             </View>
-            <View style={{width:'100%', height:'75%'}}>
+            
+                <View style={{padding: 5, flexDirection:'row', alignItems:'center'}}>
+                    <Image
+                        source={{uri:postAuthorAvatar}}
+                        style={{width:80, height:87}}
+                    />
+
+                    <View style={{padding:5}}>
+                        <Text style={{fontFamily:'Baloo2-SemiBold', fontSize:20, color:Colors.orange2,}}>{formatted_postAuthor}</Text>
+                        <Text style={{fontFamily:'Baloo2-Regular', fontSize:12, color:Colors.orange2}}>{formatted_postDate}</Text>
+                        <View style={{width:'92%', paddingRight:10}}>
+                            <Text style={{fontFamily:'Baloo2-SemiBold', fontSize:18, color:Colors.brown1}}>{postTitle}</Text>
+                        </View>
+                        
+                    
+                    </View>
+                </View>
+            <View style={{backgroundColor:Colors.grey1, height:3, width:'100%'}}></View>
+            <View style={{width:'100%', height:450}}>
                 {
-                    comments.length == 0?
+                    commentsArray.length == 0?
                     (
                         <View style={{width:'100%', height:'100%', alignItems:'center', justifyContent: 'center'}}>
                             <Text style={Styles.homeExplainingText}>There is no comment to this post</Text>
@@ -64,21 +97,20 @@ const CommentScreen = props => {
                     :
                     (
                         <FlatList
-                            data={comments}
+                            data={commentsArray}
                             keyExtractor={item => item._id}
                             renderItem={
                                 comment =>
-                                <View>
-                                    <Text>{comment.item.comment}</Text>
-                                </View>
+                                <Comment comment={comment.item}/>
                             }
                         />
                     )
                 }
             </View>
+            </View>
             <View style={{width:'100%', height:'12%', alignItems:'center', justifyContent: 'center', backgroundColor:Colors.orange1, flexDirection:'row'}}>
                 <TextInput
-                    style={{width:'75%', height: 40, backgroundColor:Colors.white, borderRadius:20, marginBottom:10, paddingHorizontal:15, fontFamily:'Baloo2-SemiBold', fontSize:12, justifyContent:'center', paddingTop:10}}
+                    style={{width:'75%', height: 40, backgroundColor:Colors.white, borderRadius:20, paddingHorizontal:15, fontFamily:'Baloo2-SemiBold', fontSize:12, justifyContent:'center', paddingTop:10}}
                     autoCorrect={false}
                     placeholder="Comment..."
                     multiline
@@ -88,13 +120,13 @@ const CommentScreen = props => {
                 {
                     commentText.length < 4?
                     (
-                        <View style={{padding:10, borderWidth:2, margin:5, borderRadius:20, marginBottom:15, backgroundColor: Colors.white, borderColor:Colors.grey1, opacity:0.5}}>
+                        <View style={{padding:10, borderWidth:2, margin:5, borderRadius:20, marginBottom:5, backgroundColor: Colors.white, borderColor:Colors.grey1, opacity:0.5}}>
                             <Text style={{fontFamily:'Baloo2-SemiBold', fontSize:12, color:Colors.orange2,}}>Send</Text>
                         </View>
                     )
                     :
                     (
-                        <TouchableOpacity onPress={sendComment} style={{padding:10, borderWidth:2, margin:5, borderRadius:20, marginBottom:15, backgroundColor: Colors.white, borderColor:Colors.grey1}}>
+                        <TouchableOpacity onPress={sendComment} style={{padding:10, borderWidth:2, margin:5, borderRadius:20, marginBottom:5, backgroundColor: Colors.white, borderColor:Colors.grey1}}>
                             <Text style={{fontFamily:'Baloo2-SemiBold', fontSize:12, color:Colors.orange2,}}>Send</Text>
                         </TouchableOpacity>
                     )

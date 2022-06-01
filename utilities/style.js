@@ -115,5 +115,11 @@ export default StyleSheet.create({
         fontSize:25,
         color:Colors.white,
         marginBottom:100
-    }
+    },
+    commentsUpTextContainer:{
+        width:'80%',
+        justifyContent:'center',        
+        paddingTop:30,
+        paddingLeft:57
+    },
 })

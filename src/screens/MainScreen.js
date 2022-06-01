@@ -20,9 +20,7 @@ const MainScreen = props => {
         }
     },[getAllDisccusionsAction, dispatch])
 
-    useEffect(() => {
-        getAllDisccusions();
-    },[getAllDisccusions])
+    getAllDisccusions();
 
     
     return(

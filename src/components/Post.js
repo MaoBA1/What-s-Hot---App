@@ -14,7 +14,7 @@ const Post = props => {
     const postAuthorAvatar = props.post.authorAvatar;
     const postImage = props.post.postImage;
     const postTitle = props.post.title;
-    const formatted_postTitle = postTitle.length > 15? postTitle.substring(0,15) + '....' : postTitle;
+    const formatted_postTitle = postTitle.length > 15? postTitle.substring(0,20) + '....' : postTitle;
     const countOfComments = props.post.comments.length;
     const countOfLikes = props.post.likes.length;
     const formatted_postDate = new Date(postDate).toDateString();
