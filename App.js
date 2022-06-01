@@ -33,12 +33,16 @@ const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 export default function App() {
   const [isFontsLoading,setIsFontsLoading] = useState(false);
   if(!isFontsLoading){
-    return(
-      <AppLoading 
-        startAsync={loadFontsFromAssets}
-        onFinish={() => setIsFontsLoading(true)}
-        onError={console.log('Something is bad')} />
-    )
+    try{
+      return(      
+        <AppLoading 
+          startAsync={loadFontsFromAssets}
+          onFinish={() => setIsFontsLoading(true)}
+          onError={console.log('Something is bad')} />
+      )
+    } catch(error) {
+      console.log(error);
+    }
   }
 
   return (

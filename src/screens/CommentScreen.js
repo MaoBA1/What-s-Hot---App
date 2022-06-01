@@ -49,6 +49,7 @@ const CommentScreen = props => {
             body:JSON.stringify({commentAuthor: userName, comment: commentText })
         })
         const data = await response.json();
+        setCommentText('');
 
     }
 
@@ -101,7 +102,7 @@ const CommentScreen = props => {
                             keyExtractor={item => item._id}
                             renderItem={
                                 comment =>
-                                <Comment comment={comment.item}/>
+                                <Comment comment={comment.item} postId={postId}/>
                             }
                         />
                     )

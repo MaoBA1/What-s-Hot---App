@@ -43,7 +43,11 @@ const DasheBoardScreen = props => {
                      <Text style={Styles.dashBoardUpText}>{blessingText[0]} {blessingText[1]} {blessingText.length==3? blessingText[2] : ''}{' ' + formatted_userName}</Text>                     
                 </View>
             </View>
-
+            <View style={{width: '100%', alignItems:'center', marginBottom:10}}>
+                <TouchableOpacity style={{padding:7 , borderWidth:2, borderRadius:20, borderColor: Colors.grey1, backgroundColor: Colors.white}}>
+                    <Text style={{fontFamily:'Baloo2-SemiBold', fontSize:15, color:Colors.orange2,}}>+ Add New Post</Text>
+                </TouchableOpacity>
+            </View>
             <View style={Styles.postContainer}>
                 {
                     !posts || posts.length == 0?

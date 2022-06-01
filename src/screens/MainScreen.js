@@ -24,7 +24,7 @@ const MainScreen = props => {
 
     
     return(
-        <KeyboardAvoidingView behavior={Platform.OS == 'ios'? 'padding' : 'position'} style={Styles.homeContainer}>
+        <KeyboardAvoidingView behavior={Platform.OS == 'ios'? 'padding' : 'height'} style={Styles.homeContainer}>
             <View style={Styles.homeTitleContainer}>
                 <Text style={Styles.homeTitleText}>Welcome To What's Hot</Text>
                 <Text style={Styles.homeSubTitleText}>All the hot stuff in one place!</Text>

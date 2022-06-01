@@ -4,6 +4,7 @@ import Colors from './color';
 export default StyleSheet.create({
     homeContainer:{
         flex:1,
+        width:'100%',
         alignItems:'center',
         justifyContent:'center',
         backgroundColor: Colors.mustard1
@@ -44,10 +45,10 @@ export default StyleSheet.create({
         marginBottom:30
     },
     userInputContainer:{
-        width:'100%',
+        width:400,
         alignItems:'center',
         justifyContent:'center',
-        margin:10
+        margin:10,        
     },
     homeScreenButton:{
         backgroundColor: Colors.brown1,
@@ -74,7 +75,7 @@ export default StyleSheet.create({
         height:120,
         backgroundColor:Colors.orange1,
         flexDirection:'row',
-        marginBottom:30
+        marginBottom:10
     },
     postUpBar:{
         width:'100%',        
