@@ -44,7 +44,7 @@ const DasheBoardScreen = props => {
                 </View>
             </View>
             <View style={{width: '100%', alignItems:'center', marginBottom:10}}>
-                <TouchableOpacity style={{padding:7 , borderWidth:2, borderRadius:20, borderColor: Colors.grey1, backgroundColor: Colors.white}}>
+                <TouchableOpacity onPress={() => props.navigation.navigate('Upload', {user:formatted_userName})} style={{padding:7 , borderWidth:2, borderRadius:20, borderColor: Colors.grey1, backgroundColor: Colors.white}}>
                     <Text style={{fontFamily:'Baloo2-SemiBold', fontSize:15, color:Colors.orange2,}}>+ Add New Post</Text>
                 </TouchableOpacity>
             </View>

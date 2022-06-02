@@ -4,6 +4,7 @@ import MainScreen, { screenOptions as MainScreenOptions } from '../screens/MainS
 import DasheBoardScreen, { screenOptions as DashBoardScreenOptions } from '../screens/DashBoardScreen';
 import DisccusionScreen, { screenOptions as DisccusionScreenOptions } from '../screens/DisccusionScreen';
 import CommentScreen, { screenOptions as CommentScreenOptions } from '../screens/CommentScreen';
+import UploadPostScreen, { screenOptions as UploadPostScreenOptions } from '../screens/UploadPostScreen';
 
 
 const appNavigationContainer = createStackNavigator();
@@ -33,6 +34,12 @@ export const AppStack = () => {
                 name='Comment'
                 component={CommentScreen}
                 options={CommentScreenOptions}
+            />
+
+            <appNavigationContainer.Screen
+                name='Upload'
+                component={UploadPostScreen}
+                options={UploadPostScreenOptions}
             />
         </appNavigationContainer.Navigator>
     )
