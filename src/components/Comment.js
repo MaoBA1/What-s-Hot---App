@@ -4,26 +4,67 @@ import Styles from '../../utilities/style';
 import Colors from '../../utilities/color';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Comment = props => {
     const commentAuthor = props.comment.commentAuthor;
     const comment = props.comment.comment; 
+    const likesArray = props.comment.likes;
     const [likeStatus, setLikeStatus] = useState(false);
     const URL = 'https://whatshotapp.herokuapp.com/api/dis/likeComment';
-    const likeComment = async() => {
-        const response = await fetch(URL + '/' + props.postId + '/' + props.comment._id, {
-            method: 'PUT',
-            headers: {
-                'Content-type': 'application/json',
-            }
-        });
 
-        const data = await response.json();
-        console.log(data);
-        if(data.status) {
-            setLikeStatus(true);
+
+
+    const likeComment = async() => {
+        const jsonToken = await AsyncStorage.getItem('Token');  
+        const deviceToken = jsonToken != null ? jsonToken : null;
+        if(deviceToken) {
+             try{
+                const response = await fetch(URL + '/' + props.postId + '/' + props.comment._id, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-type': 'application/json',
+                    },
+                    body: JSON.stringify({likerId: deviceToken})
+                    
+                });
+        
+                const data = await response.json();
+                console.log(data); 
+                if(data.status) {
+                    setLikeStatus(true);
+                }
+             }
+             catch(error) {
+                 console.log(error);
+             }
         }
+               
     }
+
+    
+    const amIlikeThisComment = async() => {
+        try{
+            const jsonToken = await AsyncStorage.getItem('Token');
+            const deviceToken = jsonToken != null ? jsonToken : null;
+            if(deviceToken) {
+                likesArray.forEach(like => { 
+                    console.log(like.userId);               
+                    if(like.userId == deviceToken) {
+                        console.log(like.userId);
+                        setLikeStatus(true);
+                        return ;
+                    }
+                })
+            }
+        } catch(error) {
+            console.log(error);
+        }
+        
+        
+    }
+
+    amIlikeThisComment();
 
     return(
         <View>

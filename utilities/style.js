@@ -118,8 +118,9 @@ export default StyleSheet.create({
         marginBottom:100
     },
     commentsUpTextContainer:{
-        width:'80%',
+        width:'50%',
         justifyContent:'center',        
+        alignItems:'center',
         paddingTop:30,
         paddingLeft:57
     },

@@ -10,6 +10,7 @@ import {getAllDisccusionsAction} from '../../store/actions';
 
 
 const DasheBoardScreen = props => {
+    const dispatch = useDispatch();
     const postSelector = useSelector(state => state.AllDisccusionsReducer);
     let posts = postSelector? postSelector.AllDisccusionsReducer.Disccusions : null;
     const userName = props.route.params.userName;
@@ -29,6 +30,17 @@ const DasheBoardScreen = props => {
     }
     
     const blessingText = blessing().split(' ');
+
+    const getAllDisccusions = useCallback(async() => {
+        let action = getAllDisccusionsAction();
+        try{
+            await dispatch(action);
+        } catch(error) {
+            console.log(error);
+        }
+    },[getAllDisccusionsAction, dispatch])
+
+    getAllDisccusions();
 
     return(
         <View style={Styles.dashBoardContainer}>
@@ -59,7 +71,7 @@ const DasheBoardScreen = props => {
                     :
                     (
                         <FlatList
-                            data={posts}
+                            data={posts.reverse()}
                             keyExtractor={item => item._id}
                             renderItem={
                                 post => 

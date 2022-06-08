@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 
 
 import { getAllDisccusionsAction } from '../../store/actions';
@@ -21,6 +24,27 @@ const MainScreen = props => {
     },[getAllDisccusionsAction, dispatch])
 
     getAllDisccusions();
+
+    const CheckToken = async() => {
+        const jsonToken = await AsyncStorage.getItem('Token');
+        const deviceToken = jsonToken != null ? JSON.parse(jsonToken) : null; 
+        if(!deviceToken) {
+            const token = makeItHase("A6cXZ9Mj5hM4As2wiIugIz5DHNO3q1VF");
+            console.log(token);
+        
+            await AsyncStorage.setItem('Token', token);
+        }
+    }
+
+    const makeItHase = str => {
+        hash = '';
+        for(var i = 0; i < str.length ; i++) {
+            hash+=str[i] + Math.round(Math.random())+1;
+        }
+        return hash;
+    }
+     
+    CheckToken();
 
     
     return(

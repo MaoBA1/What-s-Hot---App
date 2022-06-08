@@ -4,6 +4,7 @@ export default{
     mustard1: '#e9c46a',
     orange1:'#f4a261',
     orange2:'#e76f51',
+    orange3:'#e9c47a',
     green1:'#2a9d8f',
     white:'#fff',
     brown1: '#bc6c25',

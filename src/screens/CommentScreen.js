@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity, ScrollView, TextInput, KeyboardAvoidingView, FlatList } from 'react-native';
+import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Styles from '../../utilities/style';
 import Colors from '../../utilities/color';
 import Comment from '../components/Comment';
+import ScrollViewContext from "react-native/Libraries/Components/ScrollView/ScrollViewContext";
+
 
 
 
 const CommentScreen = props => {
+    const flatListRef = React.useRef();
     const postId = props.route.params.postId;
     const userName = props.route.params.user;
     const [commentText, setCommentText] = useState('');
@@ -53,10 +57,16 @@ const CommentScreen = props => {
 
     }
 
+   
+
     getPostById();
 
     return(
-        <KeyboardAvoidingView behavior="height" style={Styles.dashBoardContainer}>
+        <KeyboardAvoidingView
+          behavior="height"
+          style={Styles.dashBoardContainer}
+        
+        >
             <View style={{height:'88%'}}>
             <View style={Styles.postUpBar}>
                 <TouchableOpacity onPress={() => props.navigation.goBack(null)} style={Styles.arrowBackContainer}>
@@ -87,7 +97,7 @@ const CommentScreen = props => {
                     </View>
                 </View>
             <View style={{backgroundColor:Colors.grey1, height:3, width:'100%'}}></View>
-            <View style={{width:'100%', height:450}}>
+            <View style={{width:'100%', height:485}}>
                 {
                     commentsArray.length == 0?
                     (
@@ -97,18 +107,23 @@ const CommentScreen = props => {
                     )
                     :
                     (
-                        <FlatList
+                        <KeyboardAwareFlatList
+                            ref={flatListRef}
                             data={commentsArray}
                             keyExtractor={item => item._id}
                             renderItem={
                                 comment =>
                                 <Comment comment={comment.item} postId={postId}/>
                             }
+                            style={{flex:1}}
+                            onContentSizeChange={() => flatListRef.current.scrollToEnd({ animated: false })}
+                            
                         />
                     )
                 }
             </View>
             </View>
+            
             <View style={{width:'100%', height:'12%', alignItems:'center', justifyContent: 'center', backgroundColor:Colors.orange1, flexDirection:'row'}}>
                 <TextInput
                     style={{width:'75%', height: 40, backgroundColor:Colors.white, borderRadius:20, paddingHorizontal:15, fontFamily:'Baloo2-SemiBold', fontSize:12, justifyContent:'center', paddingTop:10}}
@@ -117,6 +132,7 @@ const CommentScreen = props => {
                     multiline
                     value={commentText}
                     onChangeText={text => setCommentText(text)}
+                    onFocus={commentsArray.length > 0?() => flatListRef.current.scrollToEnd({animated: true}): ()=>{}}
                 />
                 {
                     commentText.length < 4?
@@ -134,6 +150,7 @@ const CommentScreen = props => {
                 }
                 
             </View>
+
         </KeyboardAvoidingView>
     )
 }
